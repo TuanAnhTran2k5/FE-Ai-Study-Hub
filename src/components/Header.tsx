@@ -17,6 +17,10 @@ function Header() {
             alt="ASH Logo"
             className="h-14 w-auto object-contain hover:scale-105 transition duration-300"
           />
+
+          <h1 className="ml-3 text-[28px] font-bold text-sky-700">
+            AI Study Hub
+          </h1>
         </div>
       </div>
 
@@ -41,14 +45,10 @@ function Header() {
 
       {/* menu 1/4 */}
       <div className="flex items-center gap-3">
-        <Input
-          placeholder="Search..."
-          className="w-56 rounded-full border-slate-300 focus-visible:ring-sky-500"
-        />
-
-        <Button
-          onClick={() => navigate(`${ROUTE.AUTH}/${ROUTE.LOGIN}`)} // navigate auth/login
-          className="
+  {/* Login */}
+  <Button
+    onClick={() => navigate(`${ROUTE.AUTH}/${ROUTE.LOGIN}`)}
+    className="
       rounded-full
       bg-gradient-to-r from-sky-600 to-blue-700
       px-7 py-2.5
@@ -57,10 +57,28 @@ function Header() {
       transition-all duration-300
       hover:scale-105
     "
-        >
-          Login
-        </Button>
-      </div>
+  >
+    Login
+  </Button>
+
+  {/* Register */}
+  <Button
+    onClick={() => navigate(`${ROUTE.AUTH}/${ROUTE.REGISTER}`)}
+    className="
+      rounded-full
+      bg-gradient-to-r from-emerald-500 to-green-600
+      px-7 py-2.5
+      text-sm font-semibold text-white
+      shadow-md
+      transition-all duration-300
+      hover:scale-105
+      hover:from-emerald-600
+      hover:to-green-700
+    "
+  >
+    Register
+  </Button>
+</div>
     </header>
   );
 }

@@ -1,8 +1,10 @@
-import LoginForm from "@/components/LoginForm";
+
 import AuthLayout from "@/layouts/AuthLayout";
 import MainLayout from "@/layouts/MainLayout";
 import { ROUTE } from "@/models/routePath";
 import HomePage from "@/pages/HomePage";
+import LoginPage from "@/pages/LoginPage";
+import RegisterPage from "@/pages/RegisterPage";
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
@@ -12,7 +14,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <HomePage />,
+        element: <HomePage />
       },
     ],
   },
@@ -22,7 +24,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: ROUTE.LOGIN,
-        element: <LoginForm />,
+        element: <LoginPage/>
+      },
+      {
+        path: ROUTE.REGISTER,
+        element: <RegisterPage/>
       },
     ],
   },
@@ -30,15 +36,19 @@ export const router = createBrowserRouter([
 
 export const NAVIGATE_KEY = [
   {
-    name: "About",
+    name: "Documents",
     path: <div></div>,
   },
   {
-    name: "Contact",
+    name: "Community",
     path: <div></div>,
   },
   {
-    name: "Blog",
+    name: "AI Chat",
+    path: <div></div>,
+  },
+  {
+    name: "Leaderboard",
     path: <div></div>,
   },
 ];
