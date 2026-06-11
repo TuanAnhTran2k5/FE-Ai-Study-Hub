@@ -1,8 +1,6 @@
-import { MoreVertical } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
-
-import { Button } from '@/components/ui/button';
-import { Select } from '@/components/ui/select';
+import { ActionMenuButton } from '@/components/common/ActionMenuButton';
+import { TablePagination } from '@/components/common/TablePagination';
+import { usePagination } from '@/hooks/usePagination';
 import { fileIcons } from '@/models/documentConstants';
 import type { StudyDocument } from '@/models/document';
 
@@ -12,24 +10,7 @@ type DocumentsTableProps = {
 };
 
 export function DocumentsTable({ documents, filteredDocuments }: DocumentsTableProps) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 8;
-  const totalPages = Math.max(1, Math.ceil(filteredDocuments.length / pageSize));
-
-  const paginatedDocuments = useMemo(() => {
-    const startIndex = (currentPage - 1) * pageSize;
-
-    return filteredDocuments.slice(startIndex, startIndex + pageSize);
-  }, [currentPage, filteredDocuments]);
-
-  const firstVisibleItem = filteredDocuments.length === 0 ? 0 : (currentPage - 1) * pageSize + 1;
-  const lastVisibleItem = Math.min(currentPage * pageSize, filteredDocuments.length);
-
-  useEffect(() => {
-    if (currentPage > totalPages) {
-      setCurrentPage(totalPages);
-    }
-  }, [currentPage, totalPages]);
+  const pagination = usePagination(filteredDocuments);
 
   return (
     <div className="documents-table-card">
@@ -49,7 +30,7 @@ export function DocumentsTable({ documents, filteredDocuments }: DocumentsTableP
             </tr>
           </thead>
           <tbody>
-            {paginatedDocuments.map((document) => (
+            {pagination.paginatedItems.map((document) => (
               <DocumentRow document={document} key={document.title} />
             ))}
             {filteredDocuments.length === 0 ? (
@@ -63,47 +44,16 @@ export function DocumentsTable({ documents, filteredDocuments }: DocumentsTableP
         </table>
       </div>
 
-      <div className="table-footer">
-        <span>
-          Showing {firstVisibleItem} to {lastVisibleItem} of {documents.length} documents
-        </span>
-        <div className="pagination">
-          <Button
-            variant="ghost"
-            type="button"
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
-          >
-            &lt;
-          </Button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
-            <Button
-              className={page === currentPage ? 'active' : ''}
-              key={page}
-              variant="ghost"
-              type="button"
-              onClick={() => setCurrentPage(page)}
-            >
-              {page}
-            </Button>
-          ))}
-          <Button
-            variant="ghost"
-            type="button"
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
-          >
-            &gt;
-          </Button>
-        </div>
-        <label>
-          Show
-          <Select defaultValue="8">
-            <option value="8">8</option>
-          </Select>
-          per page
-        </label>
-      </div>
+      <TablePagination
+        currentPage={pagination.currentPage}
+        firstVisibleItem={pagination.firstVisibleItem}
+        itemLabel="documents"
+        lastVisibleItem={pagination.lastVisibleItem}
+        pageSize={pagination.pageSize}
+        totalItems={documents.length}
+        totalPages={pagination.totalPages}
+        onPageChange={pagination.setCurrentPage}
+      />
     </div>
   );
 }
@@ -140,9 +90,7 @@ function DocumentRow({ document }: DocumentRowProps) {
       <td>{document.downloads}</td>
       <td>{document.uploadedAt}</td>
       <td>
-        <Button className="more-button" variant="ghost" type="button" aria-label="Open actions">
-          <MoreVertical size={20} />
-        </Button>
+        <ActionMenuButton />
       </td>
     </tr>
   );

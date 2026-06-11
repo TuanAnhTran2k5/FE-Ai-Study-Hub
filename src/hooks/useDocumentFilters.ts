@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import type { Subject } from '@/data/subjects';
+import { includesSearchTerm, matchesSelectFilter } from '@/lib/filterUtils';
 import { getMockDocuments } from '@/services/documentService';
 import { getSubjects } from '@/services/subjectService';
 
@@ -49,22 +50,20 @@ export function useDocumentFilters() {
   }, [subjects]);
 
   const filteredDocuments = useMemo(() => {
-    const normalizedSearchTerm = searchTerm.trim().toLowerCase();
-
     return documents.filter((document) => {
       const subject = subjectByCode.get(document.subject);
-      const searchableText = [document.title, document.subject, subject?.name ?? '']
-        .join(' ')
-        .toLowerCase();
 
-      const matchesSearch =
-        normalizedSearchTerm.length === 0 || searchableText.includes(normalizedSearchTerm);
-      const matchesSemester =
-        selectedSemester === 'all-semesters' || document.semester === selectedSemester;
-      const matchesSubject =
-        selectedSubject === 'all-subjects' || document.subject === selectedSubject;
-      const matchesStatus =
-        selectedStatus === 'all-status' || document.status === selectedStatus;
+      const matchesSearch = includesSearchTerm(
+        [document.title, document.subject, subject?.name],
+        searchTerm,
+      );
+      const matchesSemester = matchesSelectFilter(
+        selectedSemester,
+        'all-semesters',
+        document.semester,
+      );
+      const matchesSubject = matchesSelectFilter(selectedSubject, 'all-subjects', document.subject);
+      const matchesStatus = matchesSelectFilter(selectedStatus, 'all-status', document.status);
 
       return matchesSearch && matchesSemester && matchesSubject && matchesStatus;
     });

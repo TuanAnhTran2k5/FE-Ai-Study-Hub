@@ -1,12 +1,7 @@
 import { Bookmark } from 'lucide-react';
 
+import { TipBar } from '@/components/common/TipBar';
+
 export function BookmarksTip() {
-  return (
-    <div className="tip-bar">
-      <span>
-        <Bookmark size={20} />
-        Bookmark important resources to access them quickly anytime!
-      </span>
-    </div>
-  );
+  return <TipBar icon={Bookmark} message="Bookmark important resources to access them quickly anytime!" />;
 }

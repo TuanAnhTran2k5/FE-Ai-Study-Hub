@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 
 import { communityDocuments } from '@/data/community';
+import { includesSearchTerm, matchesSelectFilter } from '@/lib/filterUtils';
 
 export type CommunityRatingFilter = 'all' | '5' | '4' | '3';
 
@@ -13,19 +14,17 @@ export function useCommunityFilters() {
   const [selectedRating, setSelectedRating] = useState<CommunityRatingFilter>('all');
 
   const filteredDocuments = useMemo(() => {
-    const normalizedSearchTerm = searchTerm.trim().toLowerCase();
-
     return communityDocuments.filter((document) => {
-      const searchableText = [document.title, document.subject, document.uploader]
-        .join(' ')
-        .toLowerCase();
-
-      const matchesSearch =
-        normalizedSearchTerm.length === 0 || searchableText.includes(normalizedSearchTerm);
-      const matchesSubject =
-        selectedSubject === 'all-subjects' || document.subject === selectedSubject;
-      const matchesSemester =
-        selectedSemester === 'all-semesters' || document.semester === selectedSemester;
+      const matchesSearch = includesSearchTerm(
+        [document.title, document.subject, document.uploader],
+        searchTerm,
+      );
+      const matchesSubject = matchesSelectFilter(selectedSubject, 'all-subjects', document.subject);
+      const matchesSemester = matchesSelectFilter(
+        selectedSemester,
+        'all-semesters',
+        document.semester,
+      );
       const matchesDocumentType =
         selectedDocumentType === 'all-types' ||
         getDocumentType(document.title) === selectedDocumentType;

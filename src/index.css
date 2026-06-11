@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-:root {
+﻿:root {
   color: #101828;
   background: #f8fbff;
   font-family:
@@ -2039,7 +2038,7 @@ label,
    COMMUNITY PAGE FIX LAYOUT
    ========================= */
 
-/* Layout tổng: main + right sidebar */
+/* Layout tá»•ng: main + right sidebar */
 .community-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 220px;
@@ -2050,7 +2049,7 @@ label,
   box-sizing: border-box;
 }
 
-/* Phần nội dung chính */
+/* Pháº§n ná»™i dung chÃ­nh */
 .community-main {
   width: 100%;
   max-width: 100%;
@@ -2059,7 +2058,7 @@ label,
   box-sizing: border-box;
 }
 
-/* Phần bảng / nội dung chính không được đẩy layout ra ngoài */
+/* Pháº§n báº£ng / ná»™i dung chÃ­nh khÃ´ng Ä‘Æ°á»£c Ä‘áº©y layout ra ngoÃ i */
 .community-content,
 .community-table-card {
   width: 100%;
@@ -2069,7 +2068,7 @@ label,
   box-sizing: border-box;
 }
 
-/* Right panel bên phải */
+/* Right panel bÃªn pháº£i */
 .community-right,
 .community-sidebar,
 .community-aside {
@@ -2116,7 +2115,7 @@ label,
    TABLE FIX
    ========================= */
 
-/* Wrapper cho bảng: bảng sẽ scroll ngang bên trong main */
+/* Wrapper cho báº£ng: báº£ng sáº½ scroll ngang bÃªn trong main */
 .community-table-wrapper,
 .table-wrapper {
   width: 100%;
@@ -2127,7 +2126,7 @@ label,
   box-sizing: border-box;
 }
 
-/* Table không đẩy toàn bộ page ra ngoài */
+/* Table khÃ´ng Ä‘áº©y toÃ n bá»™ page ra ngoÃ i */
 .community-table {
   width: 100%;
   min-width: 760px;
@@ -2135,19 +2134,19 @@ label,
   table-layout: auto;
 }
 
-/* Cột Document */
+/* Cá»™t Document */
 .community-table .document-cell {
   min-width: 190px;
   max-width: 260px;
 }
 
-/* Cột Uploaded by */
+/* Cá»™t Uploaded by */
 .community-table .uploader-cell {
   min-width: 130px;
   max-width: 170px;
 }
 
-/* Text dài thì cắt gọn */
+/* Text dÃ i thÃ¬ cáº¯t gá»n */
 .community-table .document-cell,
 .community-table .uploader-cell {
   overflow: hidden;
@@ -2230,7 +2229,7 @@ label,
   flex: 0 0 30px;
 }
 
-/* Text bên trong sidebar không làm vỡ layout */
+/* Text bÃªn trong sidebar khÃ´ng lÃ m vá»¡ layout */
 .trending-item p,
 .trending-item span,
 .contributor-item p,
@@ -2258,7 +2257,7 @@ label,
    RESPONSIVE
    ========================= */
 
-/* Màn hình vừa */
+/* MÃ n hÃ¬nh vá»«a */
 @media (max-width: 1200px) {
   .community-layout {
     grid-template-columns: minmax(0, 1fr) 210px;
@@ -2282,7 +2281,7 @@ label,
   }
 }
 
-/* Màn hình nhỏ: right panel xuống dưới */
+/* MÃ n hÃ¬nh nhá»: right panel xuá»‘ng dÆ°á»›i */
 @media (max-width: 992px) {
   .community-layout {
     grid-template-columns: 1fr;
@@ -2526,135 +2525,3 @@ select {
   font-size: 13px;
   font-weight: 700;
 }
-=======
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
-
-@custom-variant dark (&:is(.dark *));
-
-@theme inline {
-    --font-heading: var(--font-sans);
-    --font-sans: 'Geist Variable', sans-serif;
-    --color-sidebar-ring: var(--sidebar-ring);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-    --color-sidebar-accent: var(--sidebar-accent);
-    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-    --color-sidebar-primary: var(--sidebar-primary);
-    --color-sidebar-foreground: var(--sidebar-foreground);
-    --color-sidebar: var(--sidebar);
-    --color-chart-5: var(--chart-5);
-    --color-chart-4: var(--chart-4);
-    --color-chart-3: var(--chart-3);
-    --color-chart-2: var(--chart-2);
-    --color-chart-1: var(--chart-1);
-    --color-ring: var(--ring);
-    --color-input: var(--input);
-    --color-border: var(--border);
-    --color-destructive: var(--destructive);
-    --color-accent-foreground: var(--accent-foreground);
-    --color-accent: var(--accent);
-    --color-muted-foreground: var(--muted-foreground);
-    --color-muted: var(--muted);
-    --color-secondary-foreground: var(--secondary-foreground);
-    --color-secondary: var(--secondary);
-    --color-primary-foreground: var(--primary-foreground);
-    --color-primary: var(--primary);
-    --color-popover-foreground: var(--popover-foreground);
-    --color-popover: var(--popover);
-    --color-card-foreground: var(--card-foreground);
-    --color-card: var(--card);
-    --color-foreground: var(--foreground);
-    --color-background: var(--background);
-    --radius-sm: calc(var(--radius) * 0.6);
-    --radius-md: calc(var(--radius) * 0.8);
-    --radius-lg: var(--radius);
-    --radius-xl: calc(var(--radius) * 1.4);
-    --radius-2xl: calc(var(--radius) * 1.8);
-    --radius-3xl: calc(var(--radius) * 2.2);
-    --radius-4xl: calc(var(--radius) * 2.6);
-}
-
-:root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-    }
-  body {
-    @apply bg-background text-foreground;
-    }
-  html {
-    @apply font-sans;
-    }
-}
->>>>>>> b630af94cf38e29d45b378547d97ff6279140bb0

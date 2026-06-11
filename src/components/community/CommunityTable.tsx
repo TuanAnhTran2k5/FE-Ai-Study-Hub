@@ -1,8 +1,8 @@
-import { MoreVertical, Star } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { Star } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
-import { Select } from '@/components/ui/select';
+import { ActionMenuButton } from '@/components/common/ActionMenuButton';
+import { TablePagination } from '@/components/common/TablePagination';
+import { usePagination } from '@/hooks/usePagination';
 import { fileIcons } from '@/models/documentConstants';
 import type { CommunityDocument } from '@/data/community';
 
@@ -11,18 +11,7 @@ type CommunityTableProps = {
 };
 
 export function CommunityTable({ documents }: CommunityTableProps) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 8;
-  const totalPages = Math.max(1, Math.ceil(documents.length / pageSize));
-
-  const paginatedDocuments = useMemo(() => {
-    const startIndex = (currentPage - 1) * pageSize;
-
-    return documents.slice(startIndex, startIndex + pageSize);
-  }, [currentPage, documents]);
-
-  const firstVisibleItem = documents.length === 0 ? 0 : (currentPage - 1) * pageSize + 1;
-  const lastVisibleItem = Math.min(currentPage * pageSize, documents.length);
+  const pagination = usePagination(documents);
 
   return (
     <div className="documents-table-card community-table-card">
@@ -41,7 +30,7 @@ export function CommunityTable({ documents }: CommunityTableProps) {
             </tr>
           </thead>
           <tbody>
-            {paginatedDocuments.map((document) => (
+            {pagination.paginatedItems.map((document) => (
               <CommunityRow document={document} key={document.title} />
             ))}
             {documents.length === 0 ? (
@@ -55,47 +44,16 @@ export function CommunityTable({ documents }: CommunityTableProps) {
         </table>
       </div>
 
-      <div className="table-footer">
-        <span>
-          Showing {firstVisibleItem} to {lastVisibleItem} of {documents.length} documents
-        </span>
-        <div className="pagination">
-          <Button
-            variant="ghost"
-            type="button"
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
-          >
-            &lt;
-          </Button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
-            <Button
-              className={page === currentPage ? 'active' : ''}
-              key={page}
-              variant="ghost"
-              type="button"
-              onClick={() => setCurrentPage(page)}
-            >
-              {page}
-            </Button>
-          ))}
-          <Button
-            variant="ghost"
-            type="button"
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
-          >
-            &gt;
-          </Button>
-        </div>
-        <label>
-          Show
-          <Select defaultValue="8">
-            <option value="8">8</option>
-          </Select>
-          per page
-        </label>
-      </div>
+      <TablePagination
+        currentPage={pagination.currentPage}
+        firstVisibleItem={pagination.firstVisibleItem}
+        itemLabel="documents"
+        lastVisibleItem={pagination.lastVisibleItem}
+        pageSize={pagination.pageSize}
+        totalItems={documents.length}
+        totalPages={pagination.totalPages}
+        onPageChange={pagination.setCurrentPage}
+      />
     </div>
   );
 }
@@ -142,9 +100,7 @@ function CommunityRow({ document }: CommunityRowProps) {
         </div>
       </td>
       <td>
-        <Button className="more-button" variant="ghost" type="button" aria-label="Open actions">
-          <MoreVertical size={20} />
-        </Button>
+        <ActionMenuButton />
       </td>
     </tr>
   );

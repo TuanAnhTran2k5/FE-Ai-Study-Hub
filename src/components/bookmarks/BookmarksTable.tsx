@@ -1,8 +1,7 @@
-import { MoreVertical } from 'lucide-react';
-
-import { Button } from '@/components/ui/button';
-import { Select } from '@/components/ui/select';
+import { ActionMenuButton } from '@/components/common/ActionMenuButton';
+import { TablePagination } from '@/components/common/TablePagination';
 import { bookmarks } from '@/data/bookmarks';
+import { usePagination } from '@/hooks/usePagination';
 import { fileIcons } from '@/models/documentConstants';
 import type { BookmarkItem, BookmarkType } from '@/data/bookmarks';
 
@@ -18,6 +17,8 @@ type BookmarksTableProps = {
 };
 
 export function BookmarksTable({ filteredBookmarks }: BookmarksTableProps) {
+  const pagination = usePagination(filteredBookmarks);
+
   return (
     <div className="documents-table-card bookmarks-table-card">
       <div className="table-wrap">
@@ -33,7 +34,7 @@ export function BookmarksTable({ filteredBookmarks }: BookmarksTableProps) {
             </tr>
           </thead>
           <tbody>
-            {filteredBookmarks.map((bookmark) => (
+            {pagination.paginatedItems.map((bookmark) => (
               <BookmarkRow bookmark={bookmark} key={bookmark.title} />
             ))}
             {filteredBookmarks.length === 0 ? (
@@ -47,32 +48,16 @@ export function BookmarksTable({ filteredBookmarks }: BookmarksTableProps) {
         </table>
       </div>
 
-      <div className="table-footer">
-        <span>
-          Showing {filteredBookmarks.length === 0 ? 0 : 1} to {filteredBookmarks.length} of{' '}
-          {bookmarks.length} bookmarks
-        </span>
-        <div className="pagination">
-          <Button variant="ghost" type="button">
-            &lt;
-          </Button>
-          {[1, 2, 3, 4].map((page) => (
-            <Button className={page === 1 ? 'active' : ''} key={page} variant="ghost" type="button">
-              {page}
-            </Button>
-          ))}
-          <Button variant="ghost" type="button">
-            &gt;
-          </Button>
-        </div>
-        <label>
-          Show
-          <Select defaultValue="8">
-            <option value="8">8</option>
-          </Select>
-          per page
-        </label>
-      </div>
+      <TablePagination
+        currentPage={pagination.currentPage}
+        firstVisibleItem={pagination.firstVisibleItem}
+        itemLabel="bookmarks"
+        lastVisibleItem={pagination.lastVisibleItem}
+        pageSize={pagination.pageSize}
+        totalItems={bookmarks.length}
+        totalPages={pagination.totalPages}
+        onPageChange={pagination.setCurrentPage}
+      />
     </div>
   );
 }
@@ -109,9 +94,7 @@ function BookmarkRow({ bookmark }: BookmarkRowProps) {
         </span>
       </td>
       <td>
-        <Button className="more-button" variant="ghost" type="button" aria-label="Open actions">
-          <MoreVertical size={20} />
-        </Button>
+        <ActionMenuButton />
       </td>
     </tr>
   );

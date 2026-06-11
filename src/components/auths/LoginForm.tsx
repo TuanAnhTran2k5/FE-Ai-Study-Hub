@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { Lock, Eye, ArrowRight, Mail, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 
 function LoginForm() {
@@ -100,10 +99,12 @@ function LoginForm() {
         {/* Google */}
         <Button
           type="button"
-          variant="outline"
+          variant="secondary"
           className="h-12 w-full cursor-pointer rounded-lg border-slate-200 bg-white text-[16px] font-medium text-slate-700 hover:bg-slate-50"
         >
-          <FcGoogle className="size-7" />
+          <span className="grid size-7 place-items-center rounded-full bg-white text-lg font-bold text-blue-600">
+            G
+          </span>
           Continue with Google
         </Button>
 
