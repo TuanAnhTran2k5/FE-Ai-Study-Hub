@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export function Footer() {
   return (
     <footer className="site-footer">
@@ -8,3 +9,16 @@ export function Footer() {
     </footer>
   );
 }
+=======
+import React from 'react'
+
+function Footer() {
+  return (
+    <div>
+        Footer  
+    </div>
+  )
+}
+
+export default Footer
+>>>>>>> b630af94cf38e29d45b378547d97ff6279140bb0
