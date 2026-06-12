@@ -1,16 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
+type UserState = unknown;
 
-//initialState
-const initialState = null;
-//1 slice, 1feature chứa những reducers của nó
-//tạo ra 1 reducer cụ thể là tạo ra 1 Slice
-export const userSlice = createSlice({
-  name: "user",
-  initialState, //initialState: initialState, viết tắt tên
-  reducers: {
-    login: (_, action) => action.payload,
-    logout: () => null, //state = null
-  },
-});
-export const { login, logout } = userSlice.actions;
-export default userSlice.reducer;
+type UserAction =
+  | { type: "user/login"; payload: UserState }
+  | { type: "user/logout" };
+
+export function login(payload: UserState): UserAction {
+  return { type: "user/login", payload };
+}
+
+export function logout(): UserAction {
+  return { type: "user/logout" };
+}
+
+export default function userReducer(state: UserState = null, action: UserAction): UserState {
+  if (action.type === "user/login") {
+    return action.payload;
+  }
+
+  if (action.type === "user/logout") {
+    return null;
+  }
+
+  return state;
+}
