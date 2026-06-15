@@ -1,6 +1,7 @@
-export const ROUTE = {
-  HOME: "/",
-  AUTH: "auth",
-  LOGIN: "login",
-  REGISTER: "register"
-};
+﻿export const routePath = {
+  home: '/',
+  documents: '/documents',
+  upload: '/upload',
+  community: '/community',
+  bookmarks: '/bookmarks',
+} as const;
