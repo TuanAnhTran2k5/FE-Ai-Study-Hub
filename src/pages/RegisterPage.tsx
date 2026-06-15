@@ -5,12 +5,12 @@ import React from "react";
 function RegisterPage() {
   return (
     <>
-      <aside className="hidden lg:block">
+      <aside className="min-h-[650px]">
         <RegisterHero />
       </aside>
 
-      <div className="flex w-full justify-center">
-        <div className="w-full max-w-[760px] rounded-3xl border border-slate-200 bg-white p-8 shadow-sm md:p-10">
+      <div className="flex min-h-[650px] items-center justify-center">
+        <div className="w-full p-2">
           <RegisterForm />
         </div>
       </div>
