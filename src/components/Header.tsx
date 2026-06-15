@@ -1,40 +1,44 @@
 import { NAVIGATE_KEY } from "@/configs/router";
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Input } from "./ui/input";
+
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import { Button } from "./ui/button";
 import { ROUTE } from "@/models/routePath";
+import { ArrowLeft } from "lucide-react";
+import type { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
+import { AvatarDropdown } from "./AvatarDropdown";
 
 function Header() {
   const navigate = useNavigate();
-  return (
-    <header className="w-full h-20 bg-white/90 backdrop-blur-md border-b border-slate-200 flex justify-between items-center px-10 shadow-sm">
-      {/* logo 1/4 */}
-      <div className="w-1/4 flex justify-start">
-        <div className="flex items-center">
-          <img
-            src="/img/LOGO.png"
-            alt="ASH Logo"
-            className="h-14 w-auto object-contain hover:scale-105 transition duration-300"
-          />
 
-          <h1 className="ml-3 text-[28px] font-bold text-sky-700">
-            AI Study Hub
-          </h1>
-        </div>
-      </div>
+  const location = useLocation();
+  const isAuthPage = location.pathname.startsWith("/auth");
+  const user = useSelector((state: RootState) => state.user);
+
+  return (
+    <header className="sticky top-0 z-50 flex h-20 w-full items-center justify-between border-b border-border bg-card/70  px-10 shadow-sm backdrop-blur-xl">
+      {/* logo 1/4 */}
+      <Link to={ROUTE.HOME} className="flex items-center">
+        <img
+          src="/img/LOGO.png"
+          alt="ASH Logo"
+          className="h-14 w-auto object-contain transition duration-300 hover:scale-105"
+        />
+
+        <h1 className="ml-3 text-[28px] font-bold text-primary">
+          AI Study Hub
+        </h1>
+      </Link>
 
       {/* navbar 2/4 */}
       <nav className="w-1/2 flex justify-center items-center">
-        <ul className="flex items-center gap-8 text-[15px] font-semibold text-slate-600">
+        <ul className="flex items-center gap-8 text-[15px] font-semibold">
           {NAVIGATE_KEY.map((item) => (
             <li key={item.path}>
               <Link
                 to={item.path}
-                className="relative transition-all duration-300 hover:text-sky-600
-            after:absolute after:left-0 after:-bottom-1 after:h-[2px]
-            after:w-0 after:bg-sky-600 after:transition-all after:duration-300
-            hover:after:w-full"
+                className="relative font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:text-primary after:absolute after:left-1/2 after:-bottom-1 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
               >
                 {item.name}
               </Link>
@@ -45,40 +49,37 @@ function Header() {
 
       {/* menu 1/4 */}
       <div className="flex items-center gap-3">
-  {/* Login */}
-  <Button
-    onClick={() => navigate(`${ROUTE.AUTH}/${ROUTE.LOGIN}`)}
-    className="
-      rounded-full
-      bg-gradient-to-r from-sky-600 to-blue-700
-      px-7 py-2.5
-      text-sm font-semibold text-white
-      shadow-md
-      transition-all duration-300
-      hover:scale-105
-    "
-  >
-    Login
-  </Button>
+        {isAuthPage ? (
+          <>
+            <Button
+              variant="outline"
+              onClick={() => navigate(ROUTE.HOME)}
+              className="cursor-pointer gap-2 rounded-lg border-border bg-card/70 transition-all duration-300 hover:scale-105 hover:border-primary-hover hover:bg-primary-bg-hover hover:text-primary hover:shadow-lg active:scale-95"
+            >
+              <ArrowLeft className="ml-2 size-4" />
+              Back to Home
+            </Button>
+          </>
+        ) : user ? (
+          <AvatarDropdown user={user} />
+        ) : (
+          <>
+            <Button
+              onClick={() => navigate(`${ROUTE.AUTH}/${ROUTE.LOGIN}`)}
+              className="cursor-pointer rounded-lg bg-gradient-to-r from-primary-start to-primary-end px-7 py-2.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:scale-105 hover:from-primary-start-hover hover:to-primary-end-hover hover:shadow-lg active:scale-95"
+            >
+              Login
+            </Button>
 
-  {/* Register */}
-  <Button
-    onClick={() => navigate(`${ROUTE.AUTH}/${ROUTE.REGISTER}`)}
-    className="
-      rounded-full
-      bg-gradient-to-r from-emerald-500 to-green-600
-      px-7 py-2.5
-      text-sm font-semibold text-white
-      shadow-md
-      transition-all duration-300
-      hover:scale-105
-      hover:from-emerald-600
-      hover:to-green-700
-    "
-  >
-    Register
-  </Button>
-</div>
+            <Button
+              onClick={() => navigate(`${ROUTE.AUTH}/${ROUTE.REGISTER}`)}
+              className="cursor-pointer rounded-lg bg-gradient-to-r from-success-start to-success-end px-7 py-2.5 text-sm font-semibold text-success-foreground transition-all duration-300 hover:scale-105 hover:from-success-start-hover hover:to-success-end-hover hover:shadow-lg active:scale-95"
+            >
+              Register
+            </Button>
+          </>
+        )}
+      </div>
     </header>
   );
 }

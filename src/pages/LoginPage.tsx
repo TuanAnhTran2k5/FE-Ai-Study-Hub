@@ -11,7 +11,7 @@ function LoginPage() {
 
       {/* Right Form Area - 55% */}
       <div className="flex min-h-[650px] items-center justify-center">
-        <div className="w-full rounded-3xl bg-white p-2 shadow">
+        <div className="w-full p-2">
           <LoginForm />
         </div>
       </div>
